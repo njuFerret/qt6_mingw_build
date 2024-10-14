@@ -71,8 +71,16 @@ curl -L -o MinGW.7z https://github.com/njuFerret/qt-mingw64/releases/download/bu
 
 set PATH=%ROOT%7zip;%ROOT%cmake-%_cmake_ver%-windows-x86_64\bin;%ROOT%ninja;%ROOT%mingw64\bin;%PATH%
 
-@REM git clone https://github.com/llvm/llvm-project %LLVM_DIR%
-@REM git clone https://github.com/KDE/clazy %CLAZY_SRC%
+git clone https://github.com/llvm/llvm-project %LLVM_DIR%
+cd %LLVM_DIR%
+git checkout llvmorg-19.1.1
+
+cd %BUILD_START_DIR%
+git clone https://github.com/KDE/clazy %CLAZY_SRC%
+cd %CLAZY_SRC%
+git checkout v1.12
+
+cd %BUILD_START_DIR%
 
 @REM 编译clang
 @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
