@@ -70,7 +70,7 @@ curl -L -o MinGW.7z https://github.com/njuFerret/qt-mingw64/releases/download/bu
 @REM 7z x "%_pkgfn%.tar.xz"
 
 set PATH=%ROOT%7zip;%ROOT%cmake-%_cmake_ver%-windows-x86_64\bin;%ROOT%ninja;%ROOT%mingw64\bin;%PATH%
-
+echo %ROOT%7zip;%ROOT%cmake-%_cmake_ver%-windows-x86_64\bin;%ROOT%ninja;%ROOT%mingw64\bin;
 ninja --version
 
 
