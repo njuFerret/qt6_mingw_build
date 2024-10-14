@@ -21,7 +21,7 @@ jobs:
 
     - name: build Clang
       shell: cmd
-      run: call test.bat clang
+      run: call run.bat clang
     
     - name: Checkout clazy
       uses: actions/checkout@v4
