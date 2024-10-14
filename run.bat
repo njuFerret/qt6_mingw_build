@@ -5,8 +5,6 @@ set BUILD_START_DIR=%CD%
 @REM echo 环境变量：%PATH%
 @REM echo 当前路径：%CD%
 
-IF %BUILD_MODE%=="clang"(
-
 @REM 参数配置
 set INSTALL_PREFIX=D:\Dev
 set _qt_major_ver=6.8
@@ -69,12 +67,12 @@ curl -L -o MinGW.7z https://github.com/njuFerret/qt-mingw64/releases/download/bu
 7z x openssl.7z -o%QT_BASE_DIR%
 
 @REM echo %PATH%
-
 @REM 7z x "%_pkgfn%.tar.xz"
 
 set PATH=%ROOT%7zip;%ROOT%cmake-%_cmake_ver%-windows-x86_64\bin;%ROOT%ninja;%ROOT%mingw64\bin;%PATH%
 
-
+git clone https://github.com/llvm/llvm-project %LLVM_DIR%
+git clone https://github.com/KDE/clazy %CLAZY_SRC%
 
 @REM 编译clang
 @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
@@ -83,21 +81,12 @@ cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLV
 cmake --build %LLVM_DIR%/build --parallel 
 @REM : 安装
 cmake --build %LLVM_DIR%/build --parallel --target install  
-)
-ELSE if %BUILD_MODE%=="clazy"(
+
 @REM 编译clazy
 cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build" -S"%CLAZY_SRC%"
 cmake --build "%CLAZY_SRC%/build" --parallel
 cmake --build "%CLAZY_SRC%/build" --parallel --target install
-)
-ELSE if %BUILD_MODE%=="qt"(
 
-
-)
-ELSE if %BUILD_MODE%=="qtcreator" (
-
-
-)
 
 @REM @REM 测试各个工具
 @REM cmake --version

@@ -13,26 +13,25 @@ jobs:
     runs-on: windows-latest
 
     steps:      
-    - name: Checkout llvm-project
       uses: actions/checkout@v4
-      with:
-        repository: 'llvm/llvm-project'
-        ref: 'llvmorg-19.1.1' # specify the tag here
+      # with:
+      #   repository: 'llvm/llvm-project'
+      #   ref: 'llvmorg-19.1.1' # specify the tag here
 
     - name: build Clang
       shell: cmd
-      # run: call run.bat clang
-      run: dir
+      run: call run.bat clang
+      
     
-    - name: Checkout clazy
-      uses: actions/checkout@v4
-      with:
-        repository: 'KDE/clazy'
-        ref: 'v1.12'
+    # - name: Checkout clazy
+    #   uses: actions/checkout@v4
+    #   with:
+    #     repository: 'KDE/clazy'
+    #     ref: 'v1.12'
 
-    - name: build Clazy
-      shell: cmd
-      run: call test.bat clazy
+    # - name: build Clazy
+    #   shell: cmd
+    #   run: call test.bat clazy
 
 
 
