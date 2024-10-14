@@ -15,8 +15,8 @@ set _cmake_ver=3.30.5
 set _qt_ver=%_qt_major_ver%.%_qt_minor_ver%
 set _pkgfn=qt-everywhere-src-%_qtver%
 
-set LLVM_DIR=%BUILD_START_DIR%llvm-project
-set CLAZY_SRC=%BUILD_START_DIR%clazy
+set LLVM_DIR=%BUILD_START_DIR%\llvm-project
+set CLAZY_SRC=%BUILD_START_DIR%\clazy
 
 set QT_BASE_DIR=%INSTALL_PREFIX%\Qt
 set QT_INSTALL_DIR=%QT_BASE_DIR%\%_qt_ver%\qt
