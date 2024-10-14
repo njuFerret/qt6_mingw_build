@@ -1,0 +1,153 @@
+name: Qt mingw64 build CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build_release:
+    runs-on: windows-latest
+
+    steps:      
+    - name: Checkout llvm-project
+      uses: actions/checkout@v4
+      with:
+        repository: 'llvm/llvm-project'
+        ref: 'llvmorg-19.1.1' # specify the tag here
+
+    - name: build Clang
+      uses: actions/checkout@v4
+      shell: cmd
+      run: call test.bat clang
+    
+    - name: Checkout clazy
+      uses: actions/checkout@v4
+      with:
+        repository: 'KDE/clazy'
+        ref: 'v1.12'
+
+    - name: build Clazy
+      uses: actions/checkout@v4
+      shell: cmd
+      run: call test.bat clazy
+
+
+
+
+      # - name: Publish artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: llvm release
+      #     path: dist/Qt5.15.3-mingw64-x86-32.exe
+
+
+      # - name: Upload Qt
+      #   uses: actions/upload-artifact@v3.1.3
+      #   with:
+      #     name: qt_release_mingw64.tar.gz
+      #     path: qt_release_mingw64.tar.gz
+          
+  # build_arm64:
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Fetch dependencies and build Qt
+  #       shell: cmd
+  #       run: |
+  #         set CI_ANDROID_ABI=arm64-v8a
+  #         call run.bat release
+
+  #     - name: Upload Qt
+  #       uses: actions/upload-artifact@v3.1.3
+  #       with:
+  #         name: qt_release_mingw64_arm64-v8a.tar.gz
+  #         path: qt_release_mingw64.tar.gz
+          
+  # build_armeabi:
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Fetch dependencies and build Qt
+  #       shell: cmd
+  #       run: |
+  #         set CI_ANDROID_ABI=armeabi-v7a
+  #         call run.bat release
+
+  #     - name: Upload Qt
+  #       uses: actions/upload-artifact@v3.1.3
+  #       with:
+  #         name: qt_release_mingw64_armeabi-v7a.tar.gz
+  #         path: qt_release_mingw64.tar.gz
+          
+  # build_x86_64:
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Fetch dependencies and build Qt
+  #       shell: cmd
+  #       run: |
+  #         set CI_ANDROID_ABI=x86_64
+  #         call run.bat release
+
+  #     - name: Upload Qt
+  #       uses: actions/upload-artifact@v3.1.3
+  #       with:
+  #         name: qt_release_mingw64_x86_64.tar.gz
+  #         path: qt_release_mingw64.tar.gz
+          
+  # build_x86:
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Fetch dependencies and build Qt
+  #       shell: cmd
+  #       run: |
+  #         set CI_ANDROID_ABI=x86
+  #         call run.bat release
+
+  #     - name: Upload Qt
+  #       uses: actions/upload-artifact@v3.1.3
+  #       with:
+  #         name: qt_release_mingw64_x86.tar.gz
+  #         path: qt_release_mingw64.tar.gz
+
+      # - name: Upload Qt+Docs
+      #   uses: actions/upload-artifact@v3.1.3
+      #   with:
+      #     name: qt_release_mingw64_with_docs.tar.gz
+      #     path: qt_release_mingw64_with_docs.tar.gz
+
+          
+  # build_debug:
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Fetch dependencies and build Qt
+  #       shell: cmd
+  #       run: call run.bat debug
+
+  #     - name: Upload Qt
+  #       uses: actions/upload-artifact@v3.1.3
+  #       with:
+  #         name: qt_debug_mingw64.tar.gz
+  #         path: qt_debug_mingw64.tar.gz
+
+      # - name: Upload Qt+Docs
+      #   uses: actions/upload-artifact@v3.1.3
+      #   with:
+      #     name: qt_release_mingw64_with_docs.tar.gz
+      #     path: qt_release_mingw64_with_docs.tar.gz
