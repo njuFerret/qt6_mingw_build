@@ -20,7 +20,6 @@ jobs:
         ref: 'llvmorg-19.1.1' # specify the tag here
 
     - name: build Clang
-      uses: actions/checkout@v4
       shell: cmd
       run: call test.bat clang
     
@@ -31,7 +30,6 @@ jobs:
         ref: 'v1.12'
 
     - name: build Clazy
-      uses: actions/checkout@v4
       shell: cmd
       run: call test.bat clazy
 
