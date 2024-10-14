@@ -13,8 +13,8 @@ jobs:
     runs-on: windows-latest
 
     steps:            
-      - uses: actions/checkout@v4
       - name: Checkout llvm-project
+      - uses: actions/checkout@v4      
         with:
           repository: 'llvm/llvm-project'
           ref: 'llvmorg-19.1.1' # specify the tag here
