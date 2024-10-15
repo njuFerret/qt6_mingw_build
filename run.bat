@@ -10,10 +10,14 @@ set INSTALL_PREFIX=D:\Dev
 set _qt_major_ver=6.8
 set _qt_minor_ver=0
 set _cmake_ver=3.30.5
+set _llvm_tag_ver=llvmorg-19.1.1
+set _clazy_tag_ver=v1.12
+
 
 @REM 各个路径
 set _qt_ver=%_qt_major_ver%.%_qt_minor_ver%
 set _pkgfn=qt-everywhere-src-%_qtver%
+
 
 set LLVM_DIR=%BUILD_START_DIR%\llvm-project
 set CLAZY_SRC=%BUILD_START_DIR%\clazy
@@ -71,29 +75,32 @@ curl -L -o MinGW.7z https://github.com/njuFerret/qt-mingw64/releases/download/bu
 
 set PATH=%ROOT%\7zip;%ROOT%\cmake-%_cmake_ver%-windows-x86_64\bin;%ROOT%\ninja;%ROOT%mingw64\bin;%PATH%
 
-git clone https://github.com/llvm/llvm-project %LLVM_DIR%
+git clone https://github.com/llvm/llvm-project.git %LLVM_DIR%
 cd %LLVM_DIR%
-git checkout llvmorg-19.1.1
+git checkout %_llvm_tag_ver%
+
+curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/clean_llvm_platform.patch
+git apply clean_llvm_platform.patch
 
 cd %BUILD_START_DIR%
-git clone https://github.com/KDE/clazy %CLAZY_SRC%
+git clone https://github.com/KDE/clazy.git %CLAZY_SRC%
 cd %CLAZY_SRC%
-git checkout v1.12
+git checkout %_clazy_tag_ver%
 
 cd %BUILD_START_DIR%
 
-@REM 编译clang
-@REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
-cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
-@REM : 编译
-cmake --build %LLVM_DIR%/build --parallel 
-@REM : 安装
-cmake --build %LLVM_DIR%/build --parallel --target install  
+@REM @REM 编译clang
+@REM @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
+@REM cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
+@REM @REM : 编译
+@REM cmake --build %LLVM_DIR%/build --parallel 
+@REM @REM : 安装
+@REM cmake --build %LLVM_DIR%/build --parallel --target install  
 
-@REM 编译clazy
-cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build" -S"%CLAZY_SRC%"
-cmake --build "%CLAZY_SRC%/build" --parallel
-cmake --build "%CLAZY_SRC%/build" --parallel --target install
+@REM @REM 编译clazy
+@REM cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build" -S"%CLAZY_SRC%"
+@REM cmake --build "%CLAZY_SRC%/build" --parallel
+@REM cmake --build "%CLAZY_SRC%/build" --parallel --target install
 
 
 @REM @REM @REM 测试各个工具
