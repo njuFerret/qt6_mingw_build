@@ -105,12 +105,12 @@ dir
 
 cd %BUILD_START_DIR%
 @REM 编译clang
-if "%BUILD_MODE%"="static" do (
+if "%BUILD_MODE%"=="static" do (
     echo ********************** 静态编译 LLVM  ****************************
     set build_name=libclang_%_llvm_ver%-%mingw%-static
     @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
-) else if "%BUILD_MODE%"="shared" do (
+) else if "%BUILD_MODE%"=="shared" do (
     echo ********************** 静态编译 LLVM  ****************************
     set build_name=libclang_%_llvm_ver%-%mingw%-shared
     @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
