@@ -77,15 +77,23 @@ set PATH=%ROOT%\7zip;%ROOT%\cmake-%_cmake_ver%-windows-x86_64\bin;%ROOT%\ninja;%
 
 git clone https://github.com/llvm/llvm-project.git %LLVM_DIR%
 cd %LLVM_DIR%
+echo **********************切换当前版本为 %_llvm_tag_ver% ****************************
 git checkout %_llvm_tag_ver%
 
 curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/clean_llvm_platform.patch
+echo ***************************** 开始应用补丁 *************************************
+echo 应用补丁前：
+git diff --stat
 git apply clean_llvm_platform.patch
+echo **********************  验证补丁是否已经应用 ****************************
+git diff --stat
 
 cd %BUILD_START_DIR%
 git clone https://github.com/KDE/clazy.git %CLAZY_SRC%
 cd %CLAZY_SRC%
+
 git checkout %_clazy_tag_ver%
+
 
 cd %BUILD_START_DIR%
 
