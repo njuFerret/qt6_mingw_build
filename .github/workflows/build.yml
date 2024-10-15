@@ -25,7 +25,7 @@ jobs:
         run: call run.bat static
 
       - name: publish clang static build
-        use:  actions/upload-artifact@v4
+        uses:  actions/upload-artifact@v4
         with:
           name: libclang-static.7z
           path: libclang.7z
