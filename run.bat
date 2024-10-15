@@ -124,7 +124,7 @@ cmake --build %LLVM_DIR%/build --parallel --target install
 
 echo ********************** 编译 CLAZY  ****************************
 echo "%CLAZY_SRC%\build",
-dir %CLAZY_SRC%\build
+cd %CLAZY_SRC%
 @REM 编译clazy
 cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build" -S"%CLAZY_SRC%"
 cmake --build "%CLAZY_SRC%/build" --parallel
