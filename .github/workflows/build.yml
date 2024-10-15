@@ -20,9 +20,16 @@ jobs:
       #     path: 'llvm-project'
   
       - uses: actions/checkout@v4
-      - name: build Clang        
+      - name: build Clang static       
         shell: cmd
-        run: call run.bat clang
+        run: call run.bat static
+
+      - name: publish clang static build
+        use:  actions/upload-artifact@v4
+        with:
+          name: libclang-static.7z
+          path: libclang.7z
+          compression-level: 0 
       
       # - name: Checkout clazy
       #   uses: actions/checkout@v4
