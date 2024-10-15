@@ -125,7 +125,7 @@ cd %BUILD_START_DIR%
 @REM cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build" -S"%CLAZY_SRC%"
 @REM cmake --build "%CLAZY_SRC%/build" --parallel
 @REM cmake --build "%CLAZY_SRC%/build" --parallel --target install
-
+mkdir %CLANG_INSTALL_DIR%
 echo. >  %CLANG_INSTALL_DIR%\%build_name%.txt
 echo   ********************** libclang ver. %_llvm_ver% **************************** >>  %CLANG_INSTALL_DIR%\%build_name%.txt
 echo. >>  %CLANG_INSTALL_DIR%\%build_name%.txt
