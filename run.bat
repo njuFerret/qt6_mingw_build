@@ -104,27 +104,27 @@ git checkout %_clazy_tag_ver%
 dir
 
 cd %BUILD_START_DIR%
-@REM @REM 编译clang
-@REM if "%BUILD_MODE%"="static" do (
-@REM     echo ********************** 静态编译 LLVM  ****************************
-@REM     set build_name=libclang_%_llvm_ver%-%mingw%-static
-@REM     @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
-@REM     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
-@REM ) else if "%BUILD_MODE%"="shared" do (
-@REM     echo ********************** 静态编译 LLVM  ****************************
-@REM     set build_name=libclang_%_llvm_ver%-%mingw%-shared
-@REM     @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
-@REM     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=16.0.6 -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
-@REM )
-@REM @REM : 编译
-@REM cmake --build %LLVM_DIR%/build --parallel 
-@REM @REM : 安装
-@REM cmake --build %LLVM_DIR%/build --parallel --target install  
+@REM 编译clang
+if "%BUILD_MODE%"="static" do (
+    echo ********************** 静态编译 LLVM  ****************************
+    set build_name=libclang_%_llvm_ver%-%mingw%-static
+    @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
+    cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
+) else if "%BUILD_MODE%"="shared" do (
+    echo ********************** 静态编译 LLVM  ****************************
+    set build_name=libclang_%_llvm_ver%-%mingw%-shared
+    @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
+    cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=16.0.6 -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
+)
+@REM : 编译
+cmake --build %LLVM_DIR%/build --parallel 
+@REM : 安装
+cmake --build %LLVM_DIR%/build --parallel --target install  
 
-@REM @REM 编译clazy
-@REM cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build" -S"%CLAZY_SRC%"
-@REM cmake --build "%CLAZY_SRC%/build" --parallel
-@REM cmake --build "%CLAZY_SRC%/build" --parallel --target install
+@REM 编译clazy
+cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build" -S"%CLAZY_SRC%"
+cmake --build "%CLAZY_SRC%/build" --parallel
+cmake --build "%CLAZY_SRC%/build" --parallel --target install
 mkdir %CLANG_INSTALL_DIR%
 echo. >  %CLANG_INSTALL_DIR%\%build_name%.txt
 echo   ********************** libclang ver. %_llvm_ver% **************************** >>  %CLANG_INSTALL_DIR%\%build_name%.txt

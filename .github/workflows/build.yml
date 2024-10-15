@@ -30,7 +30,21 @@ jobs:
           name: libclang-static.7z
           path: libclang.7z
           compression-level: 0 
+          
+      # - name: Prepare GitHub Release artifacts
+      #   run: |
+      #     echo ::set-output name=FILE_NAME::libclang-static.7z >> $GITHUB_ENVIRONMENT_VARIABLES
+      #     echo ::set-output name=RELEASE_TITLE::"Release libclang-static.7z"
+      #     echo ::set-output name=RELEASE_DESCRIPTION::"Compiled Clang static library using GitHub Actions"
+
+      #       - name: Create GitHub Release
+      #         uses: actions/upload-artifact@v4
+      #         with:
+      #           name: "Release libclang-static.7z"
+      #           path: libclang.7z
       
+      # - name: Release Drafter
+      #   uses: release-drafter/release-drafter@v6.0.0
       # - name: Checkout clazy
       #   uses: actions/checkout@v4
       #   with:
