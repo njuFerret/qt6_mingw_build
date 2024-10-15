@@ -127,8 +127,8 @@ MKDIR "%CLAZY_SRC%\build",
 cd %CLAZY_SRC%
 @REM 编译clazy
 cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B build
-cmake --build "%CLAZY_SRC%/build" --parallel
-cmake --build "%CLAZY_SRC%/build" --parallel --target install
+cmake --build build --parallel
+cmake --build build --parallel --target install
 MKDIR %CLANG_INSTALL_DIR%
 echo. >  %CLANG_INSTALL_DIR%\%build_name%.txt
 echo   ********************** libclang ver. %_llvm_ver% **************************** >>  %CLANG_INSTALL_DIR%\%build_name%.txt
