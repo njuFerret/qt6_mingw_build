@@ -140,7 +140,7 @@ g++ -v >> %CLANG_INSTALL_DIR%\%build_name%.txt 2>&1
 echo ********************** 打包 libclang  ****************************
 7z a libclang.7z %CLANG_INSTALL_DIR%
 
-
+dir
 @REM @REM 测试各个工具
 @REM cmake --version
 @REM ninja --version
