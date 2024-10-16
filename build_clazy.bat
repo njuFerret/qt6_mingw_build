@@ -125,7 +125,7 @@ cd %CLAZY_SRC%
 echo ********************** 编译 CLAZY  ****************************
 
 @REM 编译clazy
-cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build -S"%CLAZY_SRC%"
+cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -GNinja -B"%CLAZY_SRC%"/build -S"%CLAZY_SRC%"
 cmake --build build --parallel
 cmake --build build --parallel --target install
 
