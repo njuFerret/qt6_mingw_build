@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: build Clang static       
         shell: cmd
-        run: call run.bat static
+        run: call build_clazy.bat static
 
       - name: publish clang static build
         uses:  actions/upload-artifact@v4
@@ -30,7 +30,7 @@ jobs:
           name: libclang-static.7z
           path: libclang.7z
           compression-level: 0 
-          
+
       # - name: Prepare GitHub Release artifacts
       #   run: |
       #     echo ::set-output name=FILE_NAME::libclang-static.7z >> $GITHUB_ENVIRONMENT_VARIABLES
