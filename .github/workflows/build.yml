@@ -3,25 +3,54 @@ name: Qt mingw64 build CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
   workflow_dispatch:
 
 jobs:
+
+  # from https://github.com/niXman/mingw-builds-binaries/blob/main/.github/workflows/build.yml
+  # split-tag:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     gcc-version: ${{ steps.get-gcc-version.outputs.version }}
+  #     rt-version: ${{ steps.get-rt-version.outputs.version }}
+  #     mingw-rev: ${{ steps.get-mingw-revision.outputs.rev }}
+  #   steps:
+  #     - id: get-gcc-version
+  #       run: echo "version=$(echo ${{ github.ref_name }} | cut -d- -f1)" >> $GITHUB_OUTPUT
+  #     - id: get-rt-version
+  #       run: echo "version=$(echo ${{ github.ref_name }} | cut -d- -f2 | cut -c4-)" >> $GITHUB_OUTPUT
+  #     - id: get-mingw-revision
+  #       run: echo "rev=$(echo ${{ github.ref_name }} | cut -d- -f3 | cut -c4-)" >> $GITHUB_OUTPUT
+
+  split-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      clang-version: ${{ steps.get-clang-version.outputs.version }}
+ 
+    steps:
+      - id: get-clang-version
+        run: echo "version=19.2.2" >> $GITHUB_OUTPUT
+  
+
+
   build:
+    needs: split-tag
     runs-on: windows-latest
+    strategy:
+      matrix:
+        buildmode: [shared, static]
 
     steps:                  
       - uses: actions/checkout@v4
-      - name: build Clang shared       
+      - name: build Clang ${{ matrix.buildmode }}  
         shell: cmd
-        run: call build_clazy.bat shared
+        run: call build_clang.bat ${{ needs.split-tag.outputs.clang-version }} MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1 ${{ matrix.buildmode }}   
 
-      - name: publish clang shared build
+      - name: publish clang ${{ matrix.buildmode }}  build
         uses:  actions/upload-artifact@v4
         with:
-          name: libclang-shared.7z
+          name: libclang_${{ needs.split-tag.outputs.clang-version }}_${{ matrix.buildmode }}.7z
           path: libclang.7z
           compression-level: 0 
 
@@ -33,7 +62,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: 'libclang-shared.7z'
+          name: 'libclang_${{ needs.split-tag.outputs.clang-version }}_${{ matrix.buildmode }}.7z'
           path: ./
 
       - name: Upload to Release
@@ -41,7 +70,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: "*.7z"
-          tag_name: test_0.01
+          tag_name: libclang_${{ needs.split-tag.outputs.clang-version }}
 
 
       # - name: Prepare GitHub Release artifacts
