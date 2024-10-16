@@ -47,6 +47,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: "*.7z"
+          tag_name: test_0.01
 
 
       # - name: Prepare GitHub Release artifacts
