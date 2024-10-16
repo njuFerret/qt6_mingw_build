@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: build Clang shared       
         shell: cmd
-        run: call build_clang.bat shared
+        run: call build_clazy.bat shared
 
       - name: publish clang shared build
         uses:  actions/upload-artifact@v4
