@@ -105,6 +105,7 @@ cd %BUILD_START_DIR%
 
 @REM dir
 
+
 @REM @REM 编译clang
 @REM if "%BUILD_MODE%"=="static" (
 @REM     echo ********************** 静态编译 LLVM  ****************************
@@ -122,6 +123,17 @@ cd %BUILD_START_DIR%
 @REM @REM : 安装
 @REM cmake --build %LLVM_DIR%/build --parallel --target install  
 
+MKDIR %INSTALL_PREFIX%
+cd %INSTALL_PREFIX%
+curl -L -o libclang.7z https://github.com/njuFerret/qt6_mingw_build/actions/runs/11339558102/artifacts/2056659303
+7z x libclang.7z
+dir
+cd libclang
+dir
+
+
+
+
 echo ********************** 编译 CLAZY  ****************************
 
 @REM 编译clazy
@@ -138,6 +150,7 @@ echo   ********************** mingw version info **************************** >>
 g++ -v >> %CLANG_INSTALL_DIR%\%build_name%.txt 2>&1
 
 echo ********************** 打包 libclang  ****************************
+cd %BUILD_START_DIR%
 7z a libclang.7z %CLANG_INSTALL_DIR%
 
 dir
