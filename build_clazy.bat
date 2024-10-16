@@ -101,7 +101,7 @@ cd %CLAZY_SRC%
 @REM echo **********************切换当前版本为 %_llvm_tag_ver% ****************************
 @REM git checkout %_clazy_tag_ver%
 
-@REM cd %BUILD_START_DIR%
+cd %BUILD_START_DIR%
 
 @REM dir
 
@@ -126,8 +126,8 @@ echo ********************** 编译 CLAZY  ****************************
 
 @REM 编译clazy
 cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -GNinja -B"%CLAZY_SRC%"/build -S"%CLAZY_SRC%"
-cmake --build build --parallel
-cmake --build build --parallel --target install
+cmake --build "%CLAZY_SRC%"/build --parallel
+cmake --build "%CLAZY_SRC%"/build --parallel --target install
 
 
 MKDIR %CLANG_INSTALL_DIR%
