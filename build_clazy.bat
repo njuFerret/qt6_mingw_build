@@ -125,7 +125,7 @@ cd %BUILD_START_DIR%
 
 MKDIR %INSTALL_PREFIX%
 cd %INSTALL_PREFIX%
-curl -L -o libclang.7z https://github.com/njuFerret/qt6_mingw_build/actions/runs/11339558102/artifacts/2056659303
+curl -L -o libclang.7z "https://productionresultssa4.blob.core.windows.net/actions-results/5509b7e1-99f1-4c63-860d-f377ba0d6f51/workflow-job-run-832b0204-66bc-5239-0b20-d0854358b9c1/artifacts/2e66ca7c1d4a3d57f615363dbc4f6520bfcaf4e3f6aaf2f11c868c754fa54df5.zip?rscd=attachment%3B+filename%3D%22libclang-static.7z.zip%22&se=2024-10-16T03%3A19%3A59Z&sig=9%2FbBDrYoMBSJJT4JtqSR0qojfkmA2EgPcVYEvTAw4xM%3D&ske=2024-10-16T12%3A34%3A31Z&skoid=ca7593d4-ee42-46cd-af88-8b886a2f84eb&sks=b&skt=2024-10-16T00%3A34%3A31Z&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skv=2024-08-04&sp=r&spr=https&sr=b&st=2024-10-16T03%3A09%3A54Z&sv=2024-08-04"
 7z x libclang.7z
 dir
 cd libclang
