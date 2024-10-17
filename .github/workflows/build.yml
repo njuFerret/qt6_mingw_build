@@ -75,7 +75,7 @@ jobs:
         id: upload_to_release
         uses: softprops/action-gh-release@v2
         with:
-          files: "*.*"
+          files: "./*.7z"
           tag_name: libclang-${{ needs.split-tag.outputs.clang-version }}
 
       - name: show files
