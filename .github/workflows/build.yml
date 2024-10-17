@@ -79,7 +79,7 @@ jobs:
           for ITM in `ls libclang*`; do (
             echo ----------------1-----------------------
             echo `pwd`: $ITM
-            ls -l
+            ls $ITM
             echo ----------------2-----------------------
             mv $ITM tmp
             mv tmp/libclang.7z $ITM
