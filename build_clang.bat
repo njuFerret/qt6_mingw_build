@@ -82,19 +82,19 @@ set PATH=%ROOT%\7zip;%ROOT%\cmake-%_cmake_ver%-windows-x86_64\bin;%ROOT%\ninja;%
 echo **********************    g++ 版本信息   ****************************
 g++ -v
 
-echo ********************** 克隆 llvm-project ****************************
-git clone https://github.com/llvm/llvm-project.git %LLVM_DIR%
-cd %LLVM_DIR%
-echo **********************切换当前版本为 %_llvm_tag_ver% ****************************
-git checkout %_llvm_tag_ver%
+@REM echo ********************** 克隆 llvm-project ****************************
+@REM git clone https://github.com/llvm/llvm-project.git %LLVM_DIR%
+@REM cd %LLVM_DIR%
+@REM echo **********************切换当前版本为 %_llvm_tag_ver% ****************************
+@REM git checkout %_llvm_tag_ver%
 
-curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/clean_llvm_platform.patch
-echo ***************************** 开始应用补丁 *************************************
-echo 应用补丁前：
-git diff --stat
-git apply clean_llvm_platform.patch
-echo **********************  验证补丁是否已经应用 ****************************
-git diff --stat
+@REM curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/clean_llvm_platform.patch
+@REM echo ***************************** 开始应用补丁 *************************************
+@REM echo 应用补丁前：
+@REM git diff --stat
+@REM git apply clean_llvm_platform.patch
+@REM echo **********************  验证补丁是否已经应用 ****************************
+@REM git diff --stat
 
 @REM echo ********************** 克隆 CLAZY ****************************
 @REM cd %BUILD_START_DIR%
