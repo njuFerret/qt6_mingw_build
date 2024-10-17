@@ -42,11 +42,11 @@ jobs:
       matrix:
         buildmode: [shared, static]
     outputs:
-      build-mode: ${{ steps.get-build-mode.outputs.buildmode }}
+      build-mode: ${{ steps.get-build-mode.outputs.mode }}
 
     steps:            
       - id: get-build-mode
-        run: echo "buildmode=${{ matrix.buildmode }}" >> $GITHUB_OUTPUT
+        run: echo "mode=${{ matrix.buildmode }}" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v4
       - name: build Clang ${{ matrix.buildmode }}  
         shell: cmd
@@ -67,7 +67,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: 'libclang_${{ needs.split-tag.outputs.clang-version }}_${{ needs.build.outputs.build-mode }}.7z'
+          name: 'libclang_${{ needs.split-tag.outputs.clang-version }}_*.7z'
           path: ./
 
       - name: Upload to Release
