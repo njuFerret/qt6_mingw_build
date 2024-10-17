@@ -48,11 +48,15 @@ jobs:
         shell: cmd
         run: call build_clang.bat ${{ needs.split-tag.outputs.clang-version }} ${{ needs.split-tag.outputs.mingw-version }} ${{ matrix.buildmode }}   
 
+      - name: rename artificts
+        shell: cmd
+        run: ren libclang.7z libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
+
       - name: publish clang ${{ matrix.buildmode }}  build
         uses:  actions/upload-artifact@v4
         with:
-          name: libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
-          path: libclang.7z
+          name: artifacts
+          path: libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
           compression-level: 0 
 
   release:
@@ -63,13 +67,12 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          # name: libclang-${{ needs.split-tag.outputs.clang-version }}_*.7z
-          pattern: libclang-${{ needs.split-tag.outputs.clang-version }}_*.7z
+          name: artifacts          
           path: ./
 
       - name: show files
         shell: cmd
-        run: dir libclang-19.1.1_MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1_shared.7z
+        run: dir *.7z
 
       - name: Upload to Release
         id: upload_to_release
@@ -80,7 +83,7 @@ jobs:
 
       - name: show files
         shell: cmd
-        run: dir libclang-19.1.1_MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1_static.7z
+        run: dir *.7z
                 
 
       # - name: Prepare GitHub Release artifacts
