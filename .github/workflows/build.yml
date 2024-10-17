@@ -33,7 +33,7 @@ jobs:
       - id: get-clang-version
         run: echo "version=19.1.1" >> $GITHUB_OUTPUT
       - id: get-mingw-version
-        run: echo "MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1" >> $GITHUB_OUTPUT
+        run: echo "version=MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1" >> $GITHUB_OUTPUT
   
   build:
     needs: split-tag
