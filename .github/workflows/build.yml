@@ -42,7 +42,7 @@ jobs:
       matrix:
         buildmode: [shared, static]
     outputs:
-      build-mode: ${{ steps.get-clang-version.outputs.buildmode }}
+      build-mode: ${{ steps.get-build-mode.outputs.buildmode }}
 
     steps:            
       - id: get-build-mode
