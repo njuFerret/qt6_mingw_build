@@ -141,6 +141,7 @@ echo ********************** 打包 libclang  ****************************
 cd %BUILD_START_DIR%
 @REM 7z a libclang.7z %CLANG_INSTALL_DIR%
 move %CLANG_INSTALL_DIR% %BUILD_START_DIR%
+dir
 
 
 @REM @REM 测试各个工具
