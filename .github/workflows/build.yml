@@ -48,33 +48,38 @@ jobs:
         shell: cmd
         run: call build_clang.bat ${{ needs.split-tag.outputs.clang-version }} ${{ needs.split-tag.outputs.mingw-version }} ${{ matrix.buildmode }}   
 
-      - name: rename artificts
-        shell: cmd
-        run: |
-          ren libclang.7z libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
-          dir
+      # - name: rename artificts
+      #   shell: cmd
+      #   run: ren libclang.7z libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
 
       - name: publish clang ${{ matrix.buildmode }}  build
         uses:  actions/upload-artifact@v4
         with:
-          name: artifacts
-          path: libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
+          name: libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
+          path: libclang.7z
           compression-level: 0 
 
   release:
-      runs-on: windows-latest
+      runs-on: ubuntu-latest
       needs: [split-tag, build]
 
       steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: artifacts          
+          # name: libclang-${{ needs.split-tag.outputs.clang-version }}_*.7z
+          pattern: libclang-${{ needs.split-tag.outputs.clang-version }}_*.7z
           path: ./
 
-      - name: show files
-        shell: cmd
-        run: dir *.7z
+      - name: show files        
+        run: |  
+          ls -l        
+          for ITM in `ls libclang*`; do (
+            mv $ITM tmp
+            mv tmp/libclang.7z $ITM
+            rm -rf tmp
+          );done          
+          ls -l
 
       - name: Upload to Release
         id: upload_to_release
