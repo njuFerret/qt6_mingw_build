@@ -57,7 +57,7 @@ jobs:
 
   release:
       runs-on: windows-latest
-      needs: [split-tag]
+      needs: [split-tag, build]
 
       steps:
       - name: Download artifact
