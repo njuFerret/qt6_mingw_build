@@ -27,12 +27,15 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       clang-version: ${{ steps.get-clang-version.outputs.version }}
+      mingw-version: ${{ steps.get-mingw-version.outputs.version }}
  
     steps:
       - id: get-clang-version
-        run: echo "version=19.2.2" >> $GITHUB_OUTPUT
+        run: echo "version=19.1.1" >> $GITHUB_OUTPUT
+      - id: get-mingw-version
+        run: echo "MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1" >> $GITHUB_OUTPUT
   
-
+11
 
   build:
     needs: split-tag
@@ -45,24 +48,24 @@ jobs:
       - uses: actions/checkout@v4
       - name: build Clang ${{ matrix.buildmode }}  
         shell: cmd
-        run: call build_clang.bat ${{ needs.split-tag.outputs.clang-version }} MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1 ${{ matrix.buildmode }}   
+        run: call build_clang.bat ${{ needs.split-tag.outputs.clang-version }} ${{ needs.split-tag.outputs.mingw-version }} ${{ matrix.buildmode }}   
 
       - name: publish clang ${{ matrix.buildmode }}  build
         uses:  actions/upload-artifact@v4
         with:
-          name: libclang_${{ needs.split-tag.outputs.clang-version }}_${{ matrix.buildmode }}.7z
+          name: libclang_${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
           path: libclang.7z
           compression-level: 0 
 
   release:
       runs-on: windows-latest
-      needs: build
+      needs: [split-tag, build]
 
       steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: 'libclang_${{ needs.split-tag.outputs.clang-version }}_${{ matrix.buildmode }}.7z'
+          name: 'libclang_${{ needs.split-tag.outputs.clang-version }}_${{ steps.build.matrix.buildmode }}.7z'
           path: ./
 
       - name: Upload to Release
