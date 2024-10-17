@@ -56,8 +56,8 @@ jobs:
         uses:  actions/upload-artifact@v4
         with:
           name: libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
-          path: libclang.7z
-          compression-level: 0 
+          path: libclang
+          
 
   release:
       runs-on: ubuntu-latest
@@ -76,16 +76,6 @@ jobs:
         run: |  
           ls -l        
           pwd
-          for ITM in `ls libclang*`; do (
-            echo ----------------1-----------------------
-            echo `pwd`: $ITM
-            ls $ITM
-            echo ----------------2-----------------------
-            mv $ITM tmp
-            mv tmp/libclang.7z $ITM
-            rm -rf tmp
-          );done          
-          ls -l
 
       - name: Upload to Release
         id: upload_to_release
