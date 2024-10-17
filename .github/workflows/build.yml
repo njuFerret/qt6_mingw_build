@@ -67,6 +67,10 @@ jobs:
           pattern: libclang-${{ needs.split-tag.outputs.clang-version }}_*.7z
           path: ./
 
+      - name: show files
+        shell: cmd
+        run: dir
+
       - name: Upload to Release
         id: upload_to_release
         uses: softprops/action-gh-release@v1
@@ -74,6 +78,10 @@ jobs:
           files: libclang-*.7z
           tag_name: libclang-${{ needs.split-tag.outputs.clang-version }}
 
+      - name: show files
+        shell: cmd
+        run: dir
+                
 
       # - name: Prepare GitHub Release artifacts
       #   run: |
