@@ -78,6 +78,7 @@ jobs:
           pwd
           for ITM in `ls libclang*`; do (
             echo $ITM
+            ls $ITM
             mv $ITM tmp
             mv tmp/libclang.7z $ITM
             rm -rf tmp
