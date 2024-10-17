@@ -75,8 +75,9 @@ jobs:
         shell: bash  
         run: |  
           ls -l        
+          pwd
           for ITM in `ls libclang*`; do (
-            @echo $ITM
+            echo $ITM
             mv $ITM tmp
             mv tmp/libclang.7z $ITM
             rm -rf tmp
