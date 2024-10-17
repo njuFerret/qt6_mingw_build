@@ -41,12 +41,8 @@ jobs:
     strategy:
       matrix:
         buildmode: [shared, static]
-    outputs:
-      build-mode: ${{ steps.get-build-mode.outputs.mode }}
 
     steps:            
-      - id: get-build-mode
-        run: echo "mode=${{ matrix.buildmode }}" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v4
       - name: build Clang ${{ matrix.buildmode }}  
         shell: cmd
@@ -61,13 +57,13 @@ jobs:
 
   release:
       runs-on: windows-latest
-      needs: [split-tag, build]
+      needs: [split-tag]
 
       steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: 'libclang_${{ needs.split-tag.outputs.clang-version }}_*.7z'
+          name: libclang_${{ needs.split-tag.outputs.clang-version }}_*.7z
           path: ./
 
       - name: Upload to Release
