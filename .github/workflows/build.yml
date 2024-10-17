@@ -69,18 +69,18 @@ jobs:
 
       - name: show files
         shell: cmd
-        run: dir
+        run: dir libclang-19.1.1_MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1_shared.7z
 
       - name: Upload to Release
         id: upload_to_release
         uses: softprops/action-gh-release@v2
         with:
-          files: "./*.7z"
+          files: "*.7z"
           tag_name: libclang-${{ needs.split-tag.outputs.clang-version }}
 
       - name: show files
         shell: cmd
-        run: dir
+        run: dir libclang-19.1.1_MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1_static.7z
                 
 
       # - name: Prepare GitHub Release artifacts
