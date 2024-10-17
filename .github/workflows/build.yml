@@ -63,7 +63,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: 'libclang_${{ needs.split-tag.outputs.clang-version }}_${{ needs.build.matrix.buildmode }}.7z'
+          name: 'libclang_${{ needs.split-tag.outputs.clang-version }}_${{ needs.build.strategy.matrix.buildmode }}.7z'
           path: ./
 
       - name: Upload to Release
