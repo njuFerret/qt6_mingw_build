@@ -66,11 +66,10 @@ curl -L -o MinGW.7z https://github.com/njuFerret/qt-mingw64/releases/download/bu
 @REM ninja-win为单文件, 需要创建文件夹, 这里创建ninja文件夹
 @REM MinGW解压后根目录为 mingw64 
 
-
-7zr x 7zip.exe -o7zip
-7z x cmake.zip
-7z x ninja-win.zip -oninja
-7z x MingW.7z
+@REM 7zr x 7zip.exe -o7zip
+@REM 7z x cmake.zip
+@REM 7z x ninja-win.zip -oninja
+@REM 7z x MingW.7z
 @REM 7z x openssl.7z -o%QT_BASE_DIR%
 
 @REM echo %PATH%
