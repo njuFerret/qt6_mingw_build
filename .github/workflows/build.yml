@@ -75,11 +75,10 @@ jobs:
           merge-multiple: true
           path: ./
 
-      - name: show files      
-        shell: bash  
+      - name: get build date      
+        id: date        
         run: |  
-          pwd
-          ls -l -R
+           echo "::set-output name=date::$(date +'%Y%m%d')"
           
 
       - name: Upload to Release
@@ -87,7 +86,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: "*.7z"
-          tag_name: libclang-${{ needs.split-tag.outputs.clang-version }}
+          tag_name: libclang-${{ needs.split-tag.outputs.clang-version }}_${{ steps.date.outputs.date }}
 
       - name: show files
         shell: bash
