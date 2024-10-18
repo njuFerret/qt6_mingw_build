@@ -51,8 +51,8 @@ curl -L -o strawberry-perl.zip https://github.com/StrawberryPerl/Perl-Dist-Straw
 curl -L -o openssl.7z https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/openssl_3.3.2_mingw-x86_64-13.1.7z
 curl -L -o MinGW.7z https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/%mingw%.7z
 
-@REM @REM 下载LLVM
-@REM git clone https://github.com/llvm/llvm-project
+@REM 下载LLVM
+git clone https://github.com/llvm/llvm-project
 
 @REM cd \
 @REM mkdir Dev
@@ -66,11 +66,11 @@ curl -L -o MinGW.7z https://github.com/njuFerret/qt-mingw64/releases/download/bu
 @REM ninja-win为单文件, 需要创建文件夹, 这里创建ninja文件夹
 @REM MinGW解压后根目录为 mingw64 
 
-@REM 7zr x 7zip.exe -o7zip
-@REM 7z x cmake.zip
-@REM 7z x ninja-win.zip -oninja
-@REM 7z x MingW.7z
-@REM 7z x openssl.7z -o%QT_BASE_DIR%
+7zr x 7zip.exe -o7zip
+7z x cmake.zip
+7z x ninja-win.zip -oninja
+7z x MingW.7z
+7z x openssl.7z -o%QT_BASE_DIR%
 
 @REM echo %PATH%
 @REM 7z x "%_pkgfn%.tar.xz"
@@ -81,19 +81,18 @@ set PATH=%ROOT%\7zip;%ROOT%\cmake-%_cmake_ver%-windows-x86_64\bin;%ROOT%\ninja;%
 echo **********************    g++ 版本信息   ****************************
 g++ -v
 
-@REM echo ********************** 克隆 llvm-project ****************************
-@REM git clone https://github.com/llvm/llvm-project.git %LLVM_DIR%
-@REM cd %LLVM_DIR%
-@REM echo **********************切换当前版本为 %_llvm_tag_ver% ****************************
-@REM git checkout %_llvm_tag_ver%
+echo ********************** 克隆 llvm-project ****************************
+git clone https://github.com/llvm/llvm-project.git %LLVM_DIR%
+cd %LLVM_DIR%
+echo **********************切换当前版本为 %_llvm_tag_ver% ****************************
+git checkout %_llvm_tag_ver%
 
-@REM curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/clean_llvm_platform.patch
-@REM echo ***************************** 开始应用补丁 *************************************
-@REM echo 应用补丁前：
-@REM git diff --stat
-@REM git apply clean_llvm_platform.patch
-@REM echo **********************  验证补丁是否已经应用 ****************************
-@REM git diff --stat
+curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/clean_llvm_platform.patch
+echo ***************************** 开始应用补丁 *************************************
+echo 应用补丁：
+git apply clean_llvm_platform.patch
+echo **********************  验证补丁是否已经应用 ****************************
+git diff --stat
 
 @REM echo ********************** 克隆 CLAZY ****************************
 @REM cd %BUILD_START_DIR%
@@ -106,25 +105,27 @@ cd %BUILD_START_DIR%
 
 dir
 
-@REM @REM 编译clang
-@REM if "%BUILD_MODE%"=="static" (
-@REM     echo ********************** 静态编译 LLVM  ****************************
-@REM     set build_name=libclang-%_llvm_ver%-%mingw%-static
-@REM     @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
-@REM     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
-@REM ) else if "%BUILD_MODE%"=="shared" (
-@REM     echo ********************** 静态编译 LLVM  ****************************
-@REM     set build_name=libclang-%_llvm_ver%-%mingw%-shared
-@REM     @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
-@REM     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=%_llvm_ver% -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
-@REM )
-@REM @REM : 编译
-@REM cmake --build %LLVM_DIR%/build --parallel 
-@REM @REM : 安装
-@REM cmake --build %LLVM_DIR%/build --parallel --target install  
+set build_name=libclang-%_llvm_ver%-%mingw%_%BUILD_MODE%
+
+@REM 编译clang
+if "%BUILD_MODE%"=="static" (
+    echo ********************** 静态编译 LLVM  ****************************
+    @REM set build_name=libclang-%_llvm_ver%-%mingw%-static
+    @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
+    cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
+) else if "%BUILD_MODE%"=="shared" (
+    echo ********************** 静态编译 LLVM  ****************************
+    @REM set build_name=libclang-%_llvm_ver%-%mingw%-shared
+    @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
+    cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=%_llvm_ver% -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
+)
+@REM : 编译
+cmake --build %LLVM_DIR%/build --parallel 
+@REM : 安装
+cmake --build %LLVM_DIR%/build --parallel --target install  
 
 @REM echo ********************** 编译 CLAZY  ****************************
-set build_name=libclang-%_llvm_ver%-%mingw%_%BUILD_MODE%
+
 @REM @REM 编译clazy
 @REM cmake -DCMAKE_INSTALL_PREFIX=%CLAZY_INSTALL_DIR% -DCLANG_LIBRARY_IMPORT="%CLANG_INSTALL_DIR%/lib/libclang.a" -DCMAKE_BUILD_TYPE=Release -G "Ninja" -B"%CLAZY_SRC%"/build -S"%CLAZY_SRC%"
 @REM cmake --build build --parallel
