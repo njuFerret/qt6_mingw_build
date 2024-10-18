@@ -51,9 +51,7 @@ jobs:
       # - name: rename artificts
       #   shell: cmd
       #   run: ren libclang.7z libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
-      - name: list directory
-        shell: cmd
-        run: dir D:\Dev\libclang
+
 
       - name: upload clang ${{ matrix.buildmode }}  build
         uses:  actions/upload-artifact@v4
@@ -74,15 +72,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           # name: libclang-${{ needs.split-tag.outputs.clang-version }}_*.7z
+          name: 'artifact'
           pattern: libclang-*.7z          
+          merge-multiple: true
           path: ./
 
       - name: show files      
         shell: bash  
         run: |  
-          ls -l        
           pwd
-          ls libclang-19.1.1_MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1_static.7z
+          ls -l -R
+          
 
       - name: Upload to Release
         id: upload_to_release
