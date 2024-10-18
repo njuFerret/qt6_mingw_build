@@ -48,16 +48,16 @@ jobs:
         shell: cmd
         run: call build_clang.bat ${{ needs.split-tag.outputs.clang-version }} ${{ needs.split-tag.outputs.mingw-version }} ${{ matrix.buildmode }}   
 
-      # - name: rename artificts
-      #   shell: cmd
-      #   run: ren libclang.7z libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
+      - name: rename artificts
+        shell: cmd
+        run: ren libclang.7z libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
 
 
       - name: upload clang ${{ matrix.buildmode }}  build
         uses:  actions/upload-artifact@v4
         with:
           name: 'libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z'
-          path: D:/Dev/libclang
+          path: ./
 
       - name: list directory
         shell: cmd
