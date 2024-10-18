@@ -51,9 +51,9 @@ jobs:
       # - name: rename artificts
       #   shell: cmd
       #   run: ren libclang.7z libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
-     - name: list directory
-       shell: cmd
-       run: dir D:\Dev\libclang
+      - name: list directory
+        shell: cmd
+        run: dir D:\Dev\libclang
 
       - name: upload clang ${{ matrix.buildmode }}  build
         uses:  actions/upload-artifact@v4
