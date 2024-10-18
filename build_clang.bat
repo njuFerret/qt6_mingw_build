@@ -138,8 +138,8 @@ g++ -v >> %CLANG_INSTALL_DIR%\%build_name%.txt 2>&1
 
 echo ********************** 打包 libclang  ****************************
 cd %BUILD_START_DIR%
-@REM 7z a libclang.7z %CLANG_INSTALL_DIR%
-move %CLANG_INSTALL_DIR% %BUILD_START_DIR%
+7z a libclang.7z %CLANG_INSTALL_DIR%
+@REM move %CLANG_INSTALL_DIR% %BUILD_START_DIR%
 dir
 
 
