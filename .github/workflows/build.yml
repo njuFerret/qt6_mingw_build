@@ -57,7 +57,7 @@ jobs:
         uses:  actions/upload-artifact@v4
         with:
           name: 'libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z'
-          path: ./
+          path: ./libclang-${{ needs.split-tag.outputs.clang-version }}_${{ needs.split-tag.outputs.mingw-version }}_${{ matrix.buildmode }}.7z
 
       - name: list directory
         shell: cmd
