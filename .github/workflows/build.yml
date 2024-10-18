@@ -71,8 +71,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          # name: libclang-${{ needs.split-tag.outputs.clang-version }}_*.7z
-          name: 'artifact'
+          # name: libclang-${{ needs.split-tag.outputs.clang-version }}_*.7z          
           pattern: libclang-*.7z          
           merge-multiple: true
           path: ./
