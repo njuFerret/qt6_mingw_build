@@ -21,7 +21,6 @@ set _qt_ver=%_qt_major_ver%.%_qt_minor_ver%
 set _pkgfn=qt-everywhere-src-%_qtver%
 set _llvm_tag_ver=llvmorg-%_llvm_ver%
 
-
 set LLVM_DIR=%BUILD_START_DIR%\llvm-project
 @REM set CLAZY_SRC=%BUILD_START_DIR%\clazy
 
@@ -48,11 +47,9 @@ curl -L -o strawberry-perl.zip https://github.com/StrawberryPerl/Perl-Dist-Straw
 @REM curl -L -o openssl-3.tar.gz "https://github.com/openssl/openssl/releases/download/openssl-3.3.2/openssl-3.3.2.tar.gz"
 @REM curl -L -o MingW.7z https://github.com/niXman/mingw-builds-binaries/releases/download/14.2.0-rt_v12-rev0/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0.7z
 
-curl -L -o openssl.7z https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/openssl_3.3.2_mingw-x86_64-13.1.7z
-curl -L -o MinGW.7z https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/%mingw%.7z
+curl -L -o openssl.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/build_tools/openssl_3.3.2_mingw-x86_64-13.1.7z
+curl -L -o MinGW.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/build_tools/%mingw%.7z
 
-@REM 下载LLVM
-git clone https://github.com/llvm/llvm-project
 
 @REM cd \
 @REM mkdir Dev
@@ -87,7 +84,8 @@ cd %LLVM_DIR%
 echo **********************切换当前版本为 %_llvm_tag_ver% ****************************
 git checkout %_llvm_tag_ver%
 
-curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt-mingw64/releases/download/build_tools/clean_llvm_platform.patch
+curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt6_mingw_build/releases/download/build_tools/clean_llvm_platform.patch
+curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt6_mingw_build/releases/download/build_tools/clean_llvm_platform.patch
 echo ***************************** 开始应用补丁 *************************************
 echo 应用补丁：
 git apply clean_llvm_platform.patch
@@ -104,17 +102,20 @@ git diff --stat
 cd %BUILD_START_DIR%
 
 dir
-
 set build_name=libclang-%_llvm_ver%-%mingw%_%BUILD_MODE%
 
 @REM 编译clang
 if "%BUILD_MODE%"=="static" (
-    echo ********************** 静态编译 LLVM  ****************************
+    echo ********************** 编译 LLVM 静态库 ****************************
     @REM set build_name=libclang-%_llvm_ver%-%mingw%-static
     @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
 ) else if "%BUILD_MODE%"=="shared" (
-    echo ********************** 静态编译 LLVM  ****************************
+    echo ********************** 编译 LLVM 动态库 ****************************
+    echo **********************   应用动态库补丁  *****************************    
+    git apply fix_shared_build.patch
+    echo **********************  动态库补丁是否已经应用 ****************************
+    git diff --stat    
     @REM set build_name=libclang-%_llvm_ver%-%mingw%-shared
     @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=%_llvm_ver% -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
