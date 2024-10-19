@@ -113,9 +113,11 @@ if "%BUILD_MODE%"=="static" (
 ) else if "%BUILD_MODE%"=="shared" (
     echo ********************** 编译 LLVM 动态库 ****************************
     echo **********************   应用动态库补丁  *****************************    
+    cd %LLVM_DIR%
     git apply fix_shared_build.patch
     echo **********************  动态库补丁是否已经应用 ****************************
     git diff --stat    
+    cd %BUILD_START_DIR% 
     @REM set build_name=libclang-%_llvm_ver%-%mingw%-shared
     @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=%_llvm_ver% -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
