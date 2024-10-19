@@ -45,7 +45,7 @@ curl -L -o ninja-win.zip https://github.com/ninja-build/ninja/releases/download/
 @REM curl -L -o "%_pkgfn%.tar.xz" "https://download.qt.io/official_releases/qt/%_qt_major_ver%/%_qtver%/single/%_pkgfn%.tar.xz"
 curl -L -o strawberry-perl.zip https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54001_64bit_UCRT/strawberry-perl-5.40.0.1-64bit-portable.zip
 @REM curl -L -o openssl-3.tar.gz "https://github.com/openssl/openssl/releases/download/openssl-3.3.2/openssl-3.3.2.tar.gz"
-curl -L -o MingW.7z https://github.com/niXman/mingw-builds-binaries/releases/download/14.2.0-rt_v12-rev0/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0.7z
+@REM curl -L -o MingW.7z https://github.com/niXman/mingw-builds-binaries/releases/download/14.2.0-rt_v12-rev0/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0.7z
 
 curl -L -o openssl.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/openssl_3.3.2_mingw-x86_64-13.1.7z
 @REM curl -L -o MinGW.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/%mingw%.7z
