@@ -47,8 +47,8 @@ curl -L -o strawberry-perl.zip https://github.com/StrawberryPerl/Perl-Dist-Straw
 @REM curl -L -o openssl-3.tar.gz "https://github.com/openssl/openssl/releases/download/openssl-3.3.2/openssl-3.3.2.tar.gz"
 @REM curl -L -o MingW.7z https://github.com/niXman/mingw-builds-binaries/releases/download/14.2.0-rt_v12-rev0/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0.7z
 
-curl -L -o openssl.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/build_tools/openssl_3.3.2_mingw-x86_64-13.1.7z
-curl -L -o MinGW.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/build_tools/%mingw%.7z
+curl -L -o openssl.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/openssl_3.3.2_mingw-x86_64-13.1.7z
+curl -L -o MinGW.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/%mingw%.7z
 
 
 @REM cd \
@@ -84,8 +84,8 @@ cd %LLVM_DIR%
 echo **********************切换当前版本为 %_llvm_tag_ver% ****************************
 git checkout %_llvm_tag_ver%
 
-curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt6_mingw_build/releases/download/build_tools/clean_llvm_platform.patch
-curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt6_mingw_build/releases/download/build_tools/clean_llvm_platform.patch
+curl -L -o clean_llvm_platform.patch https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/clean_llvm_platform.patch
+curl -L -o fix_shared_build.patch https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/fix_shared_build.patch
 echo ***************************** 开始应用补丁 *************************************
 echo 应用补丁：
 git apply clean_llvm_platform.patch
