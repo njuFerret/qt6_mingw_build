@@ -32,7 +32,7 @@ jobs:
     # 设置环境变量： echo "{environment_variable_name}={value}" >> "$GITHUB_ENV"
     steps:
       - id: get-clang-version
-        run: echo "version=19.1.1" >> $GITHUB_OUTPUT
+        run: echo "version=19.1.2" >> $GITHUB_OUTPUT
       - id: get-mingw-version
         run: echo "version=MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1" >> $GITHUB_OUTPUT
   
