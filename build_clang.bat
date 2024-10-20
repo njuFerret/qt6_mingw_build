@@ -37,18 +37,23 @@ set ROOT=%BUILD_START_DIR%
 @REM set QT_SRC=%ROOT%\qt-everywhere-src-%QT_VER%
 
 @REM 下载7zr用于解压7z安装包
+echo **********************    下载7zip    ****************************
 curl -L -o 7zr.exe https://www.7-zip.org/a/7zr.exe
 curl -L -o 7zip.exe https://www.7-zip.org/a/7z2408-x64.exe
+
 @REM 下载cmake、ninja、qt、perl和MinGW
+echo **********************    下载cmake v%_cmake_ver%   ****************************
 curl -L -o cmake.zip https://github.com/Kitware/CMake/releases/download/v%_cmake_ver%/cmake-%_cmake_ver%-windows-x86_64.zip
+echo **********************    下载ninja    ****************************
 curl -L -o ninja-win.zip https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-win.zip
 @REM curl -L -o "%_pkgfn%.tar.xz" "https://download.qt.io/official_releases/qt/%_qt_major_ver%/%_qtver%/single/%_pkgfn%.tar.xz"
+echo ***********************    下载 perl ************************************
 curl -L -o strawberry-perl.zip https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54001_64bit_UCRT/strawberry-perl-5.40.0.1-64bit-portable.zip
 @REM curl -L -o openssl-3.tar.gz "https://github.com/openssl/openssl/releases/download/openssl-3.3.2/openssl-3.3.2.tar.gz"
 @REM curl -L -o MingW.7z https://github.com/niXman/mingw-builds-binaries/releases/download/14.2.0-rt_v12-rev0/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0.7z
-
+echo **********************    下载openssl & MinGW    ****************************
 curl -L -o openssl.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/openssl_3.3.2_mingw-x86_64-13.1.7z
-@REM curl -L -o MinGW.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/%mingw%.7z
+curl -L -o MinGW.7z https://github.com/njuFerret/qt6_mingw_build/releases/download/deps/%mingw%.7z
 
 
 @REM cmake解压后根目录为文件名, 类似 cmake-3.30.5-windows-x86_64
