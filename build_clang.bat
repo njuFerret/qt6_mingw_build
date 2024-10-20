@@ -108,20 +108,14 @@ set build_name=libclang-%_llvm_ver%-%mingw%_%BUILD_MODE%
 @REM 编译clang
 if "%BUILD_MODE%"=="static" (
     echo ********************** 编译 LLVM 静态库 ****************************
-    @REM set build_name=libclang-%_llvm_ver%-%mingw%-static
     @REM : libclang配置为静态库，启用clang和clang-tools-extra（包含clangd和clang-tidy），不包括zlib
     cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=OFF -DLIBCLANG_BUILD_STATIC:BOOL=ON -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
 ) else if "%BUILD_MODE%"=="shared" (
     echo ********************** 编译 LLVM 动态库 ****************************
-    echo **********************   应用动态库补丁  *****************************    
-    cd %LLVM_DIR%
-    git apply fix_shared_build.patch
-    echo **********************  动态库补丁是否已经应用 ****************************
-    git diff --stat    
-    cd %BUILD_START_DIR% 
-    @REM set build_name=libclang-%_llvm_ver%-%mingw%-shared
     @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
-    cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=%_llvm_ver% -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
+    @REM @REM libclang 16.0.6编译通过，但19.1.2无法通过编译，这里直接关闭clang-tool-extra的test模块
+    @REM cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=%_llvm_ver% -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
+    cmake -GNinja -Wno-dev -Wno-deprecated -Wno-dangling-pointer -DBUILD_SHARED_LIBS:BOOL=ON -DCLANG_TOOLS_EXTRA_INCLUDE_DOCS:BOOL=OFF -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
 )
 @REM : 编译
 cmake --build %LLVM_DIR%/build --parallel 
