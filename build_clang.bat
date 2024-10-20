@@ -128,7 +128,7 @@ if "%BUILD_MODE%"=="static" (
     @REM 配置为动态库，启用clang和clang-tools-extra（包含clangd和clang-tidy）
     @REM @REM libclang 16.0.6编译通过，但19.1.2无法通过编译，这里直接关闭clang-tool-extra的test模块
     @REM cmake -GNinja -DBUILD_SHARED_LIBS:BOOL=ON -DLIBCLANG_LIBRARY_VERSION=%_llvm_ver% -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
-    cmake -GNinja -Wno-dev -Wno-deprecated -Wno-dangling-pointer -DBUILD_SHARED_LIBS:BOOL=ON -DCLANG_TOOLS_EXTRA_INCLUDE_DOCS:BOOL=OFF -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%LLVM_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
+    cmake -GNinja -Wno-dev -Wno-deprecated -Wno-dangling-pointer -DBUILD_SHARED_LIBS:BOOL=ON -DCLANG_TOOLS_EXTRA_INCLUDE_DOCS:BOOL=OFF -DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=%CLANG_INSTALL_DIR% %LLVM_DIR%/llvm -B%LLVM_DIR%/build
 )
 @REM : 编译
 cmake --build %LLVM_DIR%/build --parallel 
