@@ -102,6 +102,7 @@ jobs:
       openssl-version: ${{ needs.versions_config.outputs.openssl-version }}
       openssl-link-prefix: ${{ needs.versions_config.outputs.openssl-link-prefix }}
       qt-version: ${{ needs.versions_config.outputs.qt-version }}
+      qt-link-prefix: ${{ needs.versions_config.outputs.qt-link-prefix }}
       mysql-version: ${{ needs.versions_config.outputs.mysql-version }}
       mysql-link-prefix: ${{ needs.versions_config.outputs.mysql-link-prefix }}
       vulkan-version: ${{ needs.versions_config.outputs.vulkan-version }}
