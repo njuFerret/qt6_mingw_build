@@ -58,11 +58,16 @@ jobs:
       - name: show library versions
         run: |
           echo "llvm-version=${{ needs.versions_config.outputs.llvm-version }}"
+          echo "llvm-repo=${{ needs.versions_config.outputs.llvm-repo }}" 
+          echo "llvm-repo-tag=${{ needs.versions_config.outputs.llvm-repo-tag }}" 
           echo "mingw-version=${{ needs.versions_config.outputs.mingw-version }}"
+          echo "mingw-repo=${{ needs.versions_config.outputs.mingw-repo }}" 
           echo "openssl-version=${{ needs.versions_config.outputs.openssl-version }}"
           echo "qt-version=${{ needs.versions_config.outputs.qt-version }}"
           # echo "cmake=${{ needs.versions_config.outputs.cmake-version }}"
           echo "build-date=${{ needs.versions_config.outputs.build-date }}"
+
+
 
   # build-openssl:
   #   name: build openssl
