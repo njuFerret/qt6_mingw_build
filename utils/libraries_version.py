@@ -10,7 +10,7 @@ runs = []
 outputs = []
 
 for line in version_file.open("r", encoding='utf-8').readlines():
-    if line.startswith("#") or l.strip() == "":
+    if line.startswith("#") or line.strip() == "":
         continue
     # 行内注释
     line = line[: line.find('#')].strip() if '#' in line else line.strip()
