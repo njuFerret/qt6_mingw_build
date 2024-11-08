@@ -19,6 +19,7 @@ jobs:
       openssl-version: ${{ steps.get-versions.outputs.openssl-version }}
       openssl-link-prefix: ${{ steps.get-versions.outputs.openssl-link-prefix }}
       qt-version: ${{ steps.get-versions.outputs.qt-version }}
+      qt-link-prefix: ${{ steps.get-versions.outputs.qt-link-prefix }}
       mysql-version: ${{ steps.get-versions.outputs.mysql-version }}
       mysql-link-prefix: ${{ steps.get-versions.outputs.mysql-link-prefix }}
       vulkan-version: ${{ steps.get-versions.outputs.vulkan-version }}
@@ -29,7 +30,7 @@ jobs:
       build-date: ${{ steps.date.outputs.build-date }}
     steps:
       - name: generate library version files
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@v4.2.2
       - name: generate version files
         run: |
           python3 ./utils/libraries_version.py
@@ -45,6 +46,7 @@ jobs:
           echo "openssl-version=$(cat versions/openssl)" >> $GITHUB_OUTPUT
           echo "openssl-link-prefix=$(cat versions/openssl_link_prefix)" >> $GITHUB_OUTPUT
           echo "qt-version=$(cat versions/qt)" >> $GITHUB_OUTPUT
+          echo "qt-link-prefix=$(cat versions/qt_link_prefix)" >> $GITHUB_OUTPUT
           echo "mysql-version=$(cat versions/mysql)" >> $GITHUB_OUTPUT
           echo "mysql-link-prefix=$(cat versions/mysql_link_prefix)" >> $GITHUB_OUTPUT
           echo "vulkan-version=$(cat versions/vulkan)" >> $GITHUB_OUTPUT
@@ -71,37 +73,46 @@ jobs:
           echo "openssl-version=${{ needs.versions_config.outputs.openssl-version }}"
           echo "openssl-link-prefix=${{ needs.versions_config.outputs.openssl-link-prefix }}"
           echo "qt-version=${{ needs.versions_config.outputs.qt-version }}"
+          echo "qt-link-prefix=${{ needs.versions_config.outputs.qt-link-prefix }}"
           echo "mysql-version=${{ needs.versions_config.outputs.mysql-version }}"
           echo "mysql-link-prefix=${{ needs.versions_config.outputs.mysql-link-prefix }}"
           echo "vulkan-version=${{ needs.versions_config.outputs.vulkan-version }}"
           echo "vulkan-link-prefix=${{ needs.versions_config.outputs.vulkan-link-prefix }}"
           echo "install-prefix=${{ needs.versions_config.outputs.install-prefix }}"
 
-          # echo "cmake=${{ needs.versions_config.outputs.cmake-version }}"
-          echo "build-date=${{ needs.versions_config.outputs.build-date }}"
+
+
+  build-qt:
+    name: build qt
+    needs:
+      - versions_config
+      - check-versions
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on:
+          - windows-2022
+
+    uses: ./.github/workflows/build_qt.yml
+    with:
+      llvm-version: ${{ needs.versions_config.outputs.llvm-version }}
+      llvm-link-prefix: ${{ needs.versions_config.outputs.llvm-link-prefix }}
+      mingw-version: ${{ needs.versions_config.outputs.mingw-version }}
+      mingw-link-prefix: ${{ needs.versions_config.outputs.mingw-link-prefix }}
+      openssl-version: ${{ needs.versions_config.outputs.openssl-version }}
+      openssl-link-prefix: ${{ needs.versions_config.outputs.openssl-link-prefix }}
+      qt-version: ${{ needs.versions_config.outputs.qt-version }}
+      mysql-version: ${{ needs.versions_config.outputs.mysql-version }}
+      mysql-link-prefix: ${{ needs.versions_config.outputs.mysql-link-prefix }}
+      vulkan-version: ${{ needs.versions_config.outputs.vulkan-version }}
+      vulkan-link-prefix: ${{ needs.versions_config.outputs.vulkan-link-prefix }}
+      install-prefix: ${{ needs.versions_config.outputs.install-prefix }}
+      build-date: ${{ needs.versions_config.outputs.build-date }}
+      upload: true
+      runs-on: ${{ matrix.runs-on }}
 
 
 
-  # build-openssl:
-  #   name: build openssl
-  #   needs:
-  #     - versions_config
-  #     - check-versions
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       runs-on:
-  #         - windows-2022
-
-  #   uses: ./.github/workflows/build_openssl.yml
-  #   with:
-  #     openssl-version: ${{ needs.versions_config.outputs.openssl-version }}
-  #     mingw: ${{ needs.versions_config.outputs.mingw-version }}
-  #     install-prefix: ${{ needs.versions_config.outputs.install-prefix }}
-  #     build-date: ${{ needs.versions_config.outputs.build-date }}
-  #     qt-version: ${{ needs.versions_config.outputs.qt-version }}
-  #     upload: true
-  #     runs-on: ${{ matrix.runs-on }}
 
   # build-libclang:
   #   name: build libclang
