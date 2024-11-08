@@ -103,7 +103,7 @@ jobs:
           set START=%CD%
           set _qt_ver=${{ needs.versions_config.outputs.qt-version }}
           set _openss_ver=${{ needs.versions_config.outputs.openssl-version }}
-          set _llvm_ver=${{ needs.versions_config.outputs.llvm-version }}          
+          set _llvm_ver=${{ needs.versions_config.outputs.llvm-version }}
           set INSTALL_BASE=${{ needs.versions_config.outputs.install-prefix }}
           set CLANG_INSTALL_DIR=%INSTALL_BASE%\libclang
           
