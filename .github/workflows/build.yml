@@ -165,9 +165,10 @@ jobs:
           set INSTALL_BASE=${{ needs.versions_config.outputs.install-prefix }}
 
           set CLANG_INSTALL_DIR=%INSTALL_BASE%\libclang
-          set PATH=%CD%\ninja;%PATH%
-          set PATH=%CD%\MinGW\bin;%PATH%
+          set PATH=%CD%\ninja;%PATH%          
           set PATH=%CLANG_INSTALL_DIR%\bin;%PATH%
+          @REM mingw 必须放在第一个
+          set PATH=%CD%\MinGW\bin;%PATH%
 
           echo -------------------- test cmake --------------------------
           cmake --version | findstr version
@@ -211,10 +212,10 @@ jobs:
           set OPENSSL_DIR=%_3rdparty%\openssl
           set BUILD_DIR=D:\build
 
-            set CLANG_INSTALL_DIR=%INSTALL_BASE%\libclang
-            set PATH=%CD%\ninja;%PATH%
-            set PATH=%CD%\MinGW\bin;%PATH%
-            set PATH=%CLANG_INSTALL_DIR%\bin;%PATH%
+          set PATH=%CD%\ninja;%PATH%          
+          set PATH=%CLANG_INSTALL_DIR%\bin;%PATH%
+          @REM mingw 必须放在第一个
+          set PATH=%CD%\MinGW\bin;%PATH%
                                  
           echo ---------------------------Config Qt %_qt_ver%--------------------------------
           cmake -GNinja -Wno-dev -Wno-deprecated-enum-float-conversion  -Wno-deprecated -Wno-comment -Wno-unknown-pragmas^
@@ -328,8 +329,11 @@ jobs:
           set VULKAN_DIR=%_deps_%\vulkanSDK
           set OPENSSL_DIR=%_3rdparty%\openssl
           set BUILD_DIR=D:\build
-
-          set PATH=%CD%\ninja;%CD%\MinGW\bin;%QT_INSTALL_DIR%\bin;%CLANG_INSTALL_DIR%\bin;%PATH%  
+          
+          set PATH=%CD%\ninja;%PATH%          
+          set PATH=%CLANG_INSTALL_DIR%\bin;%PATH%
+          @REM mingw 必须放在第一个
+          set PATH=%CD%\MinGW\bin;%PATH%          
 
           echo %_qt_src%/qtquick3d/src/3rdparty/openxr/CMakeLists.txt
           type %_qt_src%/qtquick3d/src/3rdparty/openxr/CMakeLists.txt
