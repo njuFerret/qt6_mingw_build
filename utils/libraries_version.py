@@ -8,6 +8,7 @@ version_folder.mkdir(exist_ok=True, parents=True)
 
 runs = []
 outputs = []
+checks = []
 
 for line in version_file.open("r", encoding='utf-8').readlines():
     if line.startswith("#") or line.strip() == "":
@@ -34,8 +35,10 @@ for line in version_file.open("r", encoding='utf-8').readlines():
         tmpl = 'echo "{}-version=$(cat versions/{})" >> $GITHUB_OUTPUT'
         runs.append(tmpl.format(lib, lib))
         output = f'{lib}-version'
-    out_fmt = '{LIB}-version: ${{{{ steps.get-versions.outputs.{LIB} }}}}'
+    out_fmt = '{LIB}: ${{{{ steps.get-versions.outputs.{LIB} }}}}'
     outputs.append(out_fmt.format(LIB=output))
+    check_fmt = 'echo "{LIB}=${{{{ needs.versions_config.outputs.{LIB} }}}}"'
+    checks.append(check_fmt.format(LIB=output))
 
 
 print('\noutputs: ')
@@ -45,3 +48,7 @@ for output in outputs:
 print('\n\nrun: |')
 for run in runs:
     print(run)
+
+print('run: | (in check)')
+for check in checks:
+    print(check)
