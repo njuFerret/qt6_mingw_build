@@ -398,7 +398,9 @@ jobs:
       contents: write
   
     runs-on: ubuntu-latest
-    needs: [build-qt]
+    needs:       
+      - versions_config
+      - build-qt
 
     steps:
     - name: Download openssl
@@ -419,6 +421,6 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: "*.7z"
-        tag_name: qt-${{ needs.versions_config.outputs.qt-version }}
+        tag_name: qt-v${{ needs.versions_config.outputs.qt-version }}
 
   
