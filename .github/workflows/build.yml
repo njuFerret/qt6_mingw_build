@@ -11,16 +11,20 @@ jobs:
   versions_config:
     name: Config libraries and build
     runs-on: ubuntu-latest
-    outputs:
-      # release-version: ${{ steps.validate-tag.outputs.release-version }}
-      llvm-version: ${{ steps.get-versions.outputs.llvm-version }}
-      llvm-repo: ${{ steps.get-versions.outputs.llvm-repo }}
-      llvm-repo-tag: ${{ steps.get-versions.outputs.llvm-repo-tag }}
-      mingw-version: ${{ steps.get-versions.outputs.mingw-version }}
-      mingw-repo: ${{ steps.get-versions.outputs.mingw-repo }}
-      openssl-version: ${{ steps.get-versions.outputs.openssl-version }}
-      qt-version: ${{ steps.get-versions.outputs.qt-version }}
-      install-prefix: ${{ steps.get-versions.outputs.install-prefix }}
+    outputs:      
+      llvm-version-version: ${{ steps.get-versions.outputs.llvm-version }}
+      llvm-link-prefix-version: ${{ steps.get-versions.outputs.llvm-link-prefix }}
+      mingw-version-version: ${{ steps.get-versions.outputs.mingw-version }}
+      mingw-link-prefix-version: ${{ steps.get-versions.outputs.mingw-link-prefix }}
+      openssl-version-version: ${{ steps.get-versions.outputs.openssl-version }}
+      openssl-link-prefix-version: ${{ steps.get-versions.outputs.openssl-link-prefix }}
+      qt-version-version: ${{ steps.get-versions.outputs.qt-version }}
+      mysql-version-version: ${{ steps.get-versions.outputs.mysql-version }}
+      mysql-link-prefix-version: ${{ steps.get-versions.outputs.mysql-link-prefix }}
+      vulkan-version-version: ${{ steps.get-versions.outputs.vulkan-version }}
+      vulkan-link-prefix-version: ${{ steps.get-versions.outputs.vulkan-link-prefix }}
+      install-prefix-version: ${{ steps.get-versions.outputs.install-prefix }}
+
       # cmake-version: ${{ steps.get-versions.outputs.cmake-version }}
       build-date: ${{ steps.date.outputs.build-date }}
     steps:
@@ -35,14 +39,17 @@ jobs:
         id: get-versions
         run: |
           echo "llvm-version=$(cat versions/llvm)" >> $GITHUB_OUTPUT
-          echo "llvm-repo=$(cat versions/repo_llvm_build)" >> $GITHUB_OUTPUT
-          echo "llvm-repo-tag=$(cat versions/repo_llvm_tag)" >> $GITHUB_OUTPUT
+          echo "llvm-link-prefix=$(cat versions/llvm_link_prefix)" >> $GITHUB_OUTPUT
           echo "mingw-version=$(cat versions/mingw)" >> $GITHUB_OUTPUT
-          echo "mingw-repo=$(cat versions/repo_mingw)" >> $GITHUB_OUTPUT
+          echo "mingw-link-prefix=$(cat versions/mingw_link_prefix)" >> $GITHUB_OUTPUT
           echo "openssl-version=$(cat versions/openssl)" >> $GITHUB_OUTPUT
+          echo "openssl-link-prefix=$(cat versions/openssl_link_prefix)" >> $GITHUB_OUTPUT
           echo "qt-version=$(cat versions/qt)" >> $GITHUB_OUTPUT
+          echo "mysql-version=$(cat versions/mysql)" >> $GITHUB_OUTPUT
+          echo "mysql-link-prefix=$(cat versions/mysql_link_prefix)" >> $GITHUB_OUTPUT
+          echo "vulkan-version=$(cat versions/vulkan)" >> $GITHUB_OUTPUT
+          echo "vulkan-link-prefix=$(cat versions/vulkan_link_prefix)" >> $GITHUB_OUTPUT
           echo "install-prefix=$(cat versions/install_prefix)" >> $GITHUB_OUTPUT
-          # echo "cmake-version=$(cat versions/cmake)" >> $GITHUB_OUTPUT
           
 
       - name: get build date      
@@ -58,12 +65,18 @@ jobs:
       - name: show library versions
         run: |
           echo "llvm-version=${{ needs.versions_config.outputs.llvm-version }}"
-          echo "llvm-repo=${{ needs.versions_config.outputs.llvm-repo }}" 
-          echo "llvm-repo-tag=${{ needs.versions_config.outputs.llvm-repo-tag }}" 
+          echo "llvm-link-prefix=${{ needs.versions_config.outputs.llvm-link-prefix }}"
           echo "mingw-version=${{ needs.versions_config.outputs.mingw-version }}"
-          echo "mingw-repo=${{ needs.versions_config.outputs.mingw-repo }}" 
+          echo "mingw-link-prefix=${{ needs.versions_config.outputs.mingw-link-prefix }}"
           echo "openssl-version=${{ needs.versions_config.outputs.openssl-version }}"
+          echo "openssl-link-prefix=${{ needs.versions_config.outputs.openssl-link-prefix }}"
           echo "qt-version=${{ needs.versions_config.outputs.qt-version }}"
+          echo "mysql-version=${{ needs.versions_config.outputs.mysql-version }}"
+          echo "mysql-link-prefix=${{ needs.versions_config.outputs.mysql-link-prefix }}"
+          echo "vulkan-version=${{ needs.versions_config.outputs.vulkan-version }}"
+          echo "vulkan-link-prefix=${{ needs.versions_config.outputs.vulkan-link-prefix }}"
+          echo "install-prefix=${{ needs.versions_config.outputs.install-prefix }}"
+          
           # echo "cmake=${{ needs.versions_config.outputs.cmake-version }}"
           echo "build-date=${{ needs.versions_config.outputs.build-date }}"
 
