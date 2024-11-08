@@ -12,18 +12,18 @@ jobs:
     name: Config libraries and build
     runs-on: ubuntu-latest
     outputs:      
-      llvm-version-version: ${{ steps.get-versions.outputs.llvm-version }}
-      llvm-link-prefix-version: ${{ steps.get-versions.outputs.llvm-link-prefix }}
-      mingw-version-version: ${{ steps.get-versions.outputs.mingw-version }}
-      mingw-link-prefix-version: ${{ steps.get-versions.outputs.mingw-link-prefix }}
-      openssl-version-version: ${{ steps.get-versions.outputs.openssl-version }}
-      openssl-link-prefix-version: ${{ steps.get-versions.outputs.openssl-link-prefix }}
-      qt-version-version: ${{ steps.get-versions.outputs.qt-version }}
-      mysql-version-version: ${{ steps.get-versions.outputs.mysql-version }}
-      mysql-link-prefix-version: ${{ steps.get-versions.outputs.mysql-link-prefix }}
-      vulkan-version-version: ${{ steps.get-versions.outputs.vulkan-version }}
-      vulkan-link-prefix-version: ${{ steps.get-versions.outputs.vulkan-link-prefix }}
-      install-prefix-version: ${{ steps.get-versions.outputs.install-prefix }}
+      llvm-version: ${{ steps.get-versions.outputs.llvm-version }}
+      llvm-link-prefix: ${{ steps.get-versions.outputs.llvm-link-prefix }}
+      mingw-version: ${{ steps.get-versions.outputs.mingw-version }}
+      mingw-link-prefix: ${{ steps.get-versions.outputs.mingw-link-prefix }}
+      openssl-version: ${{ steps.get-versions.outputs.openssl-version }}
+      openssl-link-prefix: ${{ steps.get-versions.outputs.openssl-link-prefix }}
+      qt-version: ${{ steps.get-versions.outputs.qt-version }}
+      mysql-version: ${{ steps.get-versions.outputs.mysql-version }}
+      mysql-link-prefix: ${{ steps.get-versions.outputs.mysql-link-prefix }}
+      vulkan-version: ${{ steps.get-versions.outputs.vulkan-version }}
+      vulkan-link-prefix: ${{ steps.get-versions.outputs.vulkan-link-prefix }}
+      install-prefix: ${{ steps.get-versions.outputs.install-prefix }}
 
       # cmake-version: ${{ steps.get-versions.outputs.cmake-version }}
       build-date: ${{ steps.date.outputs.build-date }}
@@ -76,7 +76,7 @@ jobs:
           echo "vulkan-version=${{ needs.versions_config.outputs.vulkan-version }}"
           echo "vulkan-link-prefix=${{ needs.versions_config.outputs.vulkan-link-prefix }}"
           echo "install-prefix=${{ needs.versions_config.outputs.install-prefix }}"
-          
+
           # echo "cmake=${{ needs.versions_config.outputs.cmake-version }}"
           echo "build-date=${{ needs.versions_config.outputs.build-date }}"
 
