@@ -82,35 +82,35 @@ jobs:
 
 
 
-  build-qt:
-    name: build qt
-    needs:
-      - versions_config
-      - check-versions
-    strategy:
-      fail-fast: false
-      matrix:
-        runs-on:
-          - windows-2022
+  # build-qt:
+  #   name: build qt
+  #   needs:
+  #     - versions_config
+  #     - check-versions
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       runs-on:
+  #         - windows-2022
 
-    uses: ./.github/workflows/build_qt.yml
-    with:
-      llvm-version: ${{ needs.versions_config.outputs.llvm-version }}
-      llvm-link-prefix: ${{ needs.versions_config.outputs.llvm-link-prefix }}
-      mingw-version: ${{ needs.versions_config.outputs.mingw-version }}
-      mingw-link-prefix: ${{ needs.versions_config.outputs.mingw-link-prefix }}
-      openssl-version: ${{ needs.versions_config.outputs.openssl-version }}
-      openssl-link-prefix: ${{ needs.versions_config.outputs.openssl-link-prefix }}
-      qt-version: ${{ needs.versions_config.outputs.qt-version }}
-      qt-link-prefix: ${{ needs.versions_config.outputs.qt-link-prefix }}
-      mysql-version: ${{ needs.versions_config.outputs.mysql-version }}
-      mysql-link-prefix: ${{ needs.versions_config.outputs.mysql-link-prefix }}
-      vulkan-version: ${{ needs.versions_config.outputs.vulkan-version }}
-      vulkan-link-prefix: ${{ needs.versions_config.outputs.vulkan-link-prefix }}
-      install-prefix: ${{ needs.versions_config.outputs.install-prefix }}
-      build-date: ${{ needs.versions_config.outputs.build-date }}
-      upload: true
-      runs-on: ${{ matrix.runs-on }}
+  #   uses: ./.github/workflows/build_qt.yml
+  #   with:
+  #     llvm-version: ${{ needs.versions_config.outputs.llvm-version }}
+  #     llvm-link-prefix: ${{ needs.versions_config.outputs.llvm-link-prefix }}
+  #     mingw-version: ${{ needs.versions_config.outputs.mingw-version }}
+  #     mingw-link-prefix: ${{ needs.versions_config.outputs.mingw-link-prefix }}
+  #     openssl-version: ${{ needs.versions_config.outputs.openssl-version }}
+  #     openssl-link-prefix: ${{ needs.versions_config.outputs.openssl-link-prefix }}
+  #     qt-version: ${{ needs.versions_config.outputs.qt-version }}
+  #     qt-link-prefix: ${{ needs.versions_config.outputs.qt-link-prefix }}
+  #     mysql-version: ${{ needs.versions_config.outputs.mysql-version }}
+  #     mysql-link-prefix: ${{ needs.versions_config.outputs.mysql-link-prefix }}
+  #     vulkan-version: ${{ needs.versions_config.outputs.vulkan-version }}
+  #     vulkan-link-prefix: ${{ needs.versions_config.outputs.vulkan-link-prefix }}
+  #     install-prefix: ${{ needs.versions_config.outputs.install-prefix }}
+  #     build-date: ${{ needs.versions_config.outputs.build-date }}
+  #     upload: true
+  #     runs-on: ${{ matrix.runs-on }}
 
 
 
