@@ -49,6 +49,6 @@ print('\n\nrun: |')
 for run in runs:
     print(run)
 
-print('run: | (in check)')
+print('\n\nrun: | (in check)')
 for check in checks:
     print(check)
