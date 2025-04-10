@@ -18,7 +18,7 @@ openssl_link_prefix=https://github.com/njuFerret/actions/releases/download/build
 
 # qt下载链接
 # https://download.qt.io/official_releases/qt/6.8/6.8.0/single/qt-everywhere-src-6.8.0.zip
-qt=6.8.1                    # 注意此处修改需要同时兼顾链接
+qt=6.8.3                    # 注意此处修改需要同时兼顾链接
 qt_link_prefix=https://download.qt.io/official_releases/qt/6.8
 
 # mysql 下载链接
