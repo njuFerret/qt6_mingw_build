@@ -335,7 +335,7 @@ jobs:
           
           set PATH=%CD%\ninja;%PATH%          
           set PATH=%CLANG_INSTALL_DIR%\bin;%PATH%
-          set PATH=%QT_INSTALL_DIR%\bin;$PATH%
+          set PATH=%QT_INSTALL_DIR%\bin;%PATH%
           @REM mingw 必须放在第一个
           set PATH=%CD%\MinGW\bin;%PATH%          
 
