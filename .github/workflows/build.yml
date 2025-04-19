@@ -335,11 +335,12 @@ jobs:
           
           set PATH=%CD%\ninja;%PATH%          
           set PATH=%CLANG_INSTALL_DIR%\bin;%PATH%
+          set PATH=%QT_INSTALL_DIR%\bin;$PATH%
           @REM mingw 必须放在第一个
           set PATH=%CD%\MinGW\bin;%PATH%          
 
           echo %_qt_src%/qtquick3d/src/3rdparty/openxr/CMakeLists.txt
-          type %_qt_src%/qtquick3d/src/3rdparty/openxr/CMakeLists.txt
+          type %_qt_src%\qtquick3d\src\3rdparty\openxr\CMakeLists.txt
 
           echo ---------------------------copy  openssl (2) dlls --------------------------------
           copy %OPENSSL_DIR%\bin\libcrypto-3-x64.dll   %QT_INSTALL_DIR%\bin /y
