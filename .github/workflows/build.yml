@@ -309,7 +309,7 @@ jobs:
           echo ---------------------------build Qt %_qt_ver% --------------------------------
 
           cmake --build %BUILD_DIR% --parallel
-          cmake --install %BUILD_DIR% 
+          cmake --install %BUILD_DIR% --strip
 
           copy %BUILD_DIR%\config.summary  %QT_INSTALL_DIR%\..
 
