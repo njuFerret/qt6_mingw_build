@@ -132,17 +132,18 @@ jobs:
           echo ---------------------------download libclang.7z --------------------------------
           curl -L -o libclang.7z      ${{ needs.versions_config.outputs.llvm-link-prefix }}/download/libclang-%_llvm_ver%/libclang-%_llvm_ver%_%mingw%_static.7z
           echo ---------------------------download %_qt_src%.zip --------------------------------
-          curl -L -o %_qt_src%.zip    ${{ needs.versions_config.outputs.qt-link-prefix }}/%_qt_ver%/single/%_qt_src%.zip
+          :: 注意, qt源码下载的文件名多了个opensource,
+          curl -L -o %_qt_src%.zip    ${{ needs.versions_config.outputs.qt-link-prefix }}/%_qt_ver%/single/qt-everywhere-opensource-src-%_qt_ver%.zip
           echo ---------------------------download openssl --------------------------------
           curl -L -o openssl.7z       ${{ needs.versions_config.outputs.openssl-link-prefix }}/download/openssl-%_openssl_ver%/openssl-%_openssl_ver%_%mingw%.7z          
-          # curl -L -o vulkanSDK.exe  https://sdk.lunarg.com/sdk/download/1.3.296.0/windows/VulkanSDK-1.3.296.0-Installer.exe
-          # vulkanSDK -t %_deps_%/vulkanSDK --am --al -c in
+          ::# curl -L -o vulkanSDK.exe  https://sdk.lunarg.com/sdk/download/1.3.296.0/windows/VulkanSDK-1.3.296.0-Installer.exe
+          ::# vulkanSDK -t %_deps_%/vulkanSDK --am --al -c in
           echo ---------------------------download mysql --------------------------------
           curl -L -o mysql.7z         ${{ needs.versions_config.outputs.mysql-link-prefix }}/mysql.7z
           echo ---------------------------download vulkanSDK --------------------------------
           curl -L -o vulkanSDK.7z     ${{ needs.versions_config.outputs.vulkan-link-prefix }}/vulkanSDK_1.3.296.0.7z
           
-          # curl -L -o %_qt_creator_src%.zip https://download.qt.io/official_releases/qtcreator/14.0/%_qt_creator_ver%/qt-creator-opensource-src-%_qt_creator_ver%.zip
+          ::# curl -L -o %_qt_creator_src%.zip https://download.qt.io/official_releases/qtcreator/14.0/%_qt_creator_ver%/qt-creator-opensource-src-%_qt_creator_ver%.zip
           7z x vulkanSDK.7z -o%_deps_%\
           7z x mysql.7z -o%_deps_%\
           7z x %mingw%.7z
