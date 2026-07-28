@@ -289,7 +289,6 @@ jobs:
             -DFEATURE_vkb_lang_zh_TW:BOOL=OFF ^
             -DFEATURE_zhuyin:BOOL=OFF ^
             -DFEATURE_cangjie:BOOL=OFF ^
-            -DFEATURE_clangcpp=OFF ^
             -DFEATURE_cxx20:BOOL=ON ^
             -DFEATURE_cxx2a:BOOL=ON ^
             -DBUILD_WITH_PCH:BOOL=ON ^
@@ -306,10 +305,10 @@ jobs:
             -B%BUILD_DIR%
 
           type %BUILD_DIR%\config.summary
-          echo ------------------------------------------------------------------------------
-          echo     关闭ludate使用libclang: -DFEATURE_clangcpp=OFF, 启用时，编译出错
-          echo     Qt 6.10开始已经直接删除该特性
-          echo ------------------------------------------------------------------------------
+          ::echo ------------------------------------------------------------------------------
+          ::echo     关闭ludate使用libclang: -DFEATURE_clangcpp=OFF, 启用时，编译出错
+          ::echo     Qt 6.10开始已经直接删除该特性
+          ::echo ------------------------------------------------------------------------------
 
           echo ---------------------------build Qt %_qt_ver% --------------------------------
 

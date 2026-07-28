@@ -2,7 +2,7 @@
 
 # llvm 下载链接
 # https://github.com/njuFerret/actions/releases/download/build_20241102/libclang-19.1.3_MinGW-x86_64-13.1.0-release-posix-seh-ucrt-rt_v11-rev1_fix2_static.7z
-llvm=21.1.8         # llvm 版本号
+llvm=19.1.5         # llvm 版本号
 llvm_link_prefix=https://github.com/njuFerret/actions/releases
 
 # mingw 下载链接
